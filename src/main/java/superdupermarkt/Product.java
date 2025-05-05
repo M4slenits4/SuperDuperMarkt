@@ -1,11 +1,12 @@
 package superdupermarkt;
 
-import com.sun.source.tree.LabeledStatementTree;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Instant;
 
 /**
  * Define the abilities of the product
@@ -14,25 +15,32 @@ import java.util.Date;
 @Getter
 @Setter
 public abstract class Product {
-    // finaler Grundpreis
-    private final double basicPrice;
     // Bezeichnung
     private String label;
     // Qualität
     private int quality;
     // Verfallsdatum
-    private Date expireDate;
+    private Instant expireDate;
     // Preis
     private double price;
 
     /**
-     * Calculate the daily price of a product.
+     * Calculate and round the daily price of a product.
      *
      * @param basicPrice    basic price of the product.
      * @param quality       the quality of the product
      */
-    public void calculateDailyPrice(double basicPrice, int quality) {
-        setPrice(basicPrice + (0.10 * quality));
+    public void calculatePrice(double basicPrice, int quality) {
+        BigDecimal bigDecimal = new BigDecimal(Double.toString(basicPrice + (0.10 * quality)));
+        BigDecimal roundedPrice = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+        setPrice(roundedPrice.doubleValue());
+    }
+
+    /**
+     * Get out all needed product details of the product.
+     */
+    public void getProductDetails() {
+        System.out.println("Bezeichnung: " + getLabel() + ", Preis: " + getPrice() + ", Qualität: " +  getQuality());
     }
 
     /**
@@ -43,17 +51,17 @@ public abstract class Product {
     public abstract boolean checkQualityLevel();
 
     /**
-     * Daily loss of the product quality
+     * Update the quality level for the product. Depends on the product.
      */
-    public abstract void setDailyQualityChanges();
+    public abstract void updateQualityLevel(Instant today);
 
     /**
-     * Set a daily price if it is changing for this product
+     * Update daily price if it is changing for this product
      */
-    public abstract void setDailyPrice();
+    public abstract void updateDailyPrice();
 
     /**
      *  Check for the expiry date and expire conditions of the product
      */
-    public abstract void checkExpireDate();
+    public abstract void handleExpiration(Instant today);
 }
