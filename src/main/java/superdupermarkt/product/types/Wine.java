@@ -18,7 +18,7 @@ public class Wine extends Product{
     /** The number of growing quality. */
     private static final int QUALITY_INCREMENT = 1;
     /** Day interval when the quality grows. It is 9 because it would grow after the tenth day */
-    private static final Duration QUALITY_INCREASE_INTERVAL = Duration.ofDays(9);
+    private static final Duration QUALITY_INCREASE_INTERVAL = Duration.ofDays(10);
 
     @Getter
     private Instant dayOfIncreasingQuality;
@@ -35,7 +35,6 @@ public class Wine extends Product{
     public Wine(String label, int quality, Instant expireDate) {
         super(label, quality, expireDate, BASIC_PRICE);
         // set the expiry date plus 10 for the quality increase
-        dayOfIncreasingQuality = expireDate.plus(QUALITY_INCREASE_INTERVAL);
     }
 
     /**
@@ -59,6 +58,9 @@ public class Wine extends Product{
      */
     @Override
     public void updateQualityLevel(Instant today) {
+        if (dayOfIncreasingQuality == null) {
+            dayOfIncreasingQuality = getExpireDate().plus(QUALITY_INCREASE_INTERVAL);
+        }
         // Check for maximum quality level.
         if (getQuality() < MAXIMUM_QUALITY_LEVEL) {
             // Check if the ten days have passed.

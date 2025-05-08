@@ -1,35 +1,29 @@
 package superdupermarkt.worker;
 
-import superdupermarkt.product.types.Cheese;
 import superdupermarkt.product.types.Product;
-import superdupermarkt.product.types.Wine;
+import superdupermarkt.source.data.CSVProductReader;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
-        List<Product> productList = new ArrayList<>();
-        productList.add(new Cheese("Cheddar", 28, Instant.now().plus(Duration.ofDays(100))));
-        productList.add(new Cheese("Tilsiter", 240, Instant.now().plus(Duration.ofDays(80))));
-        productList.add(new Cheese("Emmentaler", 190, Instant.now().plus(Duration.ofDays(40))));
+        // Need to switch the path to your own
+        String fileNameProductData = "C:\\Users\\jonas\\IdeaProjects\\SuperDuperMarkt\\src\\main\\java\\superdupermarkt\\source\\data\\productData.csv";
 
-        productList.add(new Wine("Gutedel", -10, Instant.now().plus(Duration.ofDays(50))));
-        productList.add(new Wine("Chardonney", 30, Instant.now().plus(Duration.ofDays(10))));
-        productList.add(new Wine("Spätburgunder", 30, Instant.now().plus(Duration.ofDays(100))));
+        Instant startTime = Instant.parse("2025-05-08T19:00:31.907111500Z");
 
-        Instant startTime = Instant.now();
-
+        List<Product> productList = CSVProductReader.readProductDataCSV(fileNameProductData);
         System.out.println("Startwerte des Programmes");
-        productList.forEach(Product::getProductDetails);
+        System.out.println("-------------------------------------------------------");
+        productList.forEach(f -> System.out.println(f.getProductDetails()));
 
-        for (int anzahlTage = 0; anzahlTage <= 150; anzahlTage++) {
+        for (int anzahlTage = 0; anzahlTage < 150; anzahlTage++) {
 
-            System.out.println("Tag: " + (anzahlTage) + " Datum: " + startTime);
             System.out.println(" ");
+            System.out.println("Tag: " + (anzahlTage + 1) + " Datum: " + startTime);
 
             StringBuilder productInfos;
             for (Product product : productList) {
