@@ -1,5 +1,7 @@
 package superdupermarkt.product.types;
 
+import lombok.Getter;
+
 import java.time.Duration;
 import java.time.Instant;
 
@@ -10,7 +12,7 @@ import java.time.Instant;
 public class Wine extends Product{
 
     /** The basic price of the wine. */
-    private static final double BASIC_PRICE = 10.00;
+    public static final double BASIC_PRICE = 10.00;
     /** The maximum quality level that can be achieved over time. */
     private static final int MAXIMUM_QUALITY_LEVEL = 50;
     /** The number of growing quality. */
@@ -18,6 +20,7 @@ public class Wine extends Product{
     /** Day interval when the quality grows. It is 9 because it would grow after the tenth day */
     private static final Duration QUALITY_INCREASE_INTERVAL = Duration.ofDays(9);
 
+    @Getter
     private Instant dayOfIncreasingQuality;
 
     /**
