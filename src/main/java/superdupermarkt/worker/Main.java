@@ -8,18 +8,24 @@ import java.time.Instant;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args){
 
-        // Need to switch the path to your own
-        String fileNameProductData = "src\\main\\java\\superdupermarkt\\source\\data\\ProductData.csv";
+    private static final String LINE_SEPARATOR = "-------------------------------------------------------";
+
+    public static void main(String[] args){
 
         Instant startTime = Instant.parse("2025-05-08T19:00:31.907111500Z");
 
+        // read in product types and product list
         CSVProductReader.readProductTypesCSV();
-        List<Product> productList = CSVProductReader.readProductDataCSV(fileNameProductData);
+        List<Product> productList = CSVProductReader.readProductDataCSV(CSVProductReader.FILE_PATH_PRODUCT_DATA);
+        if (productList == null || productList.isEmpty()) {
+            System.out.println("Fehler beim einlesen oder ProductData.csv ist leer !");
+        }
+
+        // start
         System.out.println("Startwerte des Programmes");
-        System.out.println("-------------------------------------------------------");
-        productList.forEach(f -> System.out.println(f.getProductDetails()));
+        System.out.println(LINE_SEPARATOR);
+            productList.forEach(f -> System.out.println(f.getProductDetails()));
 
         for (int anzahlTage = 0; anzahlTage < 150; anzahlTage++) {
 
@@ -38,7 +44,7 @@ public class Main {
                 System.out.println(productInfos);
             }
             startTime = startTime.plus(Duration.ofDays(1));
-            System.out.println("-------------------------------------------------------");
+            System.out.println(LINE_SEPARATOR);
         }
     }
 }

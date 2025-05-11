@@ -8,6 +8,7 @@ import java.time.Instant;
  * and checking the best-before date.
  */
 public class Cheese extends Product {
+
     /** The basic price of the cheese. */
     private static final double BASIC_PRICE = 6.00;
     /** The minimum quality level of the cheese. */

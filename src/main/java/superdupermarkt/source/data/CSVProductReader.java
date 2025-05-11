@@ -17,10 +17,10 @@ public class CSVProductReader {
 
     /** A static list to hold all the products read from the CSV.*/
     private static final List<Product> PRODUCT_LIST = new ArrayList<>();
-
-    /** The file path to the CSV file containing the definitions of product types. */
-    private static final String FILE_NAME_PRODUCT_TYPES = "src\\main\\java\\superdupermarkt\\source\\data\\ProductTypes.csv";
-
+    /** The file path to the CSV file containing the product types. */
+    private static final String FILE_PATH_PRODUCT_TYPES = "src\\main\\java\\superdupermarkt\\source\\data\\ProductTypes.csv";
+    /** The file path to the CSV file containing the product data. */
+    public static final String FILE_PATH_PRODUCT_DATA = "src\\main\\java\\superdupermarkt\\source\\data\\ProductData.csv";
     /** A static map that associates the product type from the CSV with the correct {@link Product}.*/
     private static final Map<String, Class<? extends Product>> PRODUCT_TYPES = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class CSVProductReader {
      * If the class is successfully loaded, its {@code Class} object is stored in the {@link #PRODUCT_TYPES} map.
      */
     public static void readProductTypesCSV() {
-        try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(FILE_NAME_PRODUCT_TYPES))) {
+        try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(FILE_PATH_PRODUCT_TYPES))) {
             Map<String, String> line;
             while ((line = reader.readMap()) != null) {
                 PRODUCT_TYPES.put(line.get("Typ"), (Class<? extends Product>) Class.forName(line.get("Klassenname")));

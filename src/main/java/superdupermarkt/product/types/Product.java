@@ -16,6 +16,7 @@ import java.time.Instant;
 @Getter
 @Setter
 public abstract class Product {
+
     // Bezeichnung
     private String label;
     // Qualität
