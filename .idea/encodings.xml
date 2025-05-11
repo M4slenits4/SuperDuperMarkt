@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../DataOrganizer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../DataOrganizer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../DataOrganizerCSV/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../DataOrganizerCSV/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../DataOrganizerSQL/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../DataOrganizerSQL/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../NewProduct/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../NewProduct/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../Products/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../Products/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DataOrganizer/src/main/java" charset="UTF-8" />
