@@ -1,7 +1,5 @@
 package superdupermarkt.product.types;
 
-import lombok.Getter;
-
 import java.time.Duration;
 import java.time.Instant;
 
@@ -20,7 +18,6 @@ public class Wine extends Product{
     /** Day interval when the quality grows. It is 9 because it would grow after the tenth day */
     private static final Duration QUALITY_INCREASE_INTERVAL = Duration.ofDays(10);
 
-    @Getter
     private Instant dayOfIncreasingQuality;
 
     /**

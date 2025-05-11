@@ -9,14 +9,13 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-
 /**
  * Junit tests for {@link WineTest} class.
  */
 public class WineTest {
 
     private Wine wine;
-    private Instant now;
+    private Instant instant;
     private Instant expiryDate;
 
     /**
@@ -24,8 +23,8 @@ public class WineTest {
      */
     @BeforeEach
     public void setUp() {
-        now = Instant.now();
-        expiryDate = now.plus(55, ChronoUnit.DAYS);
+        instant = Instant.parse("2025-08-16T19:00:31.907111500Z");
+        expiryDate = instant.plus(55, ChronoUnit.DAYS);
         wine = new Wine("Chardonnay", 40, expiryDate);
     }
 
@@ -64,10 +63,9 @@ public class WineTest {
      */
     @Test
     public void updateQualityLevel_qualityBelowMaxAndIncreaseIntervalPassed_increasesQuality() {
-        int wineQuality = wine.getQuality();
-        Instant increaseDay = wine.getDayOfIncreasingQuality().plus(Duration.ofDays(1));
-        wine.updateQualityLevel(increaseDay);
-        assertEquals(wineQuality + 1, wine.getQuality());
+        Instant tenDaysAfterExpiry = wine.getExpireDate().plus(Duration.ofDays(10));
+        wine.updateQualityLevel(tenDaysAfterExpiry.plus(Duration.ofDays(1)));
+        assertEquals(41, wine.getQuality());
     }
 
     /**
@@ -76,11 +74,10 @@ public class WineTest {
      */
     @Test
     public void updateQualityLevel_qualityAtMax_doesNotIncreaseQuality() {
-        wine.setQuality(55);
-        int wineQuality = wine.getQuality();
-        Instant increaseDay = wine.getDayOfIncreasingQuality().plus(Duration.ofDays(1));
-        wine.updateQualityLevel(increaseDay);
-        assertEquals(wineQuality, wine.getQuality());
+        Instant tenDaysAfterExpiry = wine.getExpireDate().plus(Duration.ofDays(10));
+        wine.setQuality(50);
+        wine.updateQualityLevel(tenDaysAfterExpiry.plus(Duration.ofDays(1)));
+        assertEquals(50, wine.getQuality());
     }
 
     /**
@@ -89,10 +86,9 @@ public class WineTest {
      */
     @Test
     public void updateQualityLevel_qualityBelowMaxAndIncreaseIntervalNotPassed_doesNotIncreaseQuality() {
-        int wineQuality = wine.getQuality();
-        Instant increaseDay = wine.getDayOfIncreasingQuality().minus(Duration.ofDays(1));
-        wine.updateQualityLevel(increaseDay);
-        assertEquals(wineQuality, wine.getQuality());
+        Instant nineDaysAfterExpiry = wine.getExpireDate().plus(Duration.ofDays(9));
+        wine.updateQualityLevel(nineDaysAfterExpiry.plus(Duration.ofDays(1)));
+        assertEquals(40, wine.getQuality());
     }
 
     /**
@@ -122,7 +118,7 @@ public class WineTest {
      */
     @Test
     public void isExpired_alwaysReturnsFalse() {
-        assertFalse(wine.isExpired(now));
+        assertFalse(wine.isExpired(instant));
         assertFalse(wine.isExpired(expiryDate.plus(42, ChronoUnit.DAYS)));
         assertFalse(wine.isExpired(expiryDate.minus(42, ChronoUnit.DAYS)));
     }
