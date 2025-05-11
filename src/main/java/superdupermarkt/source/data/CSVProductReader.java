@@ -1,9 +1,7 @@
 package superdupermarkt.source.data;
 
 import com.opencsv.CSVReaderHeaderAware;
-import superdupermarkt.product.types.Cheese;
 import superdupermarkt.product.types.Product;
-import superdupermarkt.product.types.Wine;
 
 import java.io.FileReader;
 import java.time.Instant;
@@ -17,19 +15,30 @@ import java.util.Map;
  */
 public class CSVProductReader {
 
-    /**
-     * A static list to hold all the products read from the CSV.
-     */
-    private static final List<Product> productList = new ArrayList<>();
+    /** A static list to hold all the products read from the CSV.*/
+    private static final List<Product> PRODUCT_LIST = new ArrayList<>();
 
-    /**
-     * A static map that associates the product type from the CSV with the correct {@link Product}.
-     */
+    /** The file path to the CSV file containing the definitions of product types. */
+    private static final String FILE_NAME_PRODUCT_TYPES = "src\\main\\java\\superdupermarkt\\source\\data\\ProductTypes.csv";
+
+    /** A static map that associates the product type from the CSV with the correct {@link Product}.*/
     private static final Map<String, Class<? extends Product>> PRODUCT_TYPES = new HashMap<>();
 
-    static {
-        PRODUCT_TYPES.put("Cheese", Cheese.class);
-        PRODUCT_TYPES.put("Wine", Wine.class);
+    /**
+     * Reads product type information from a CSV file.
+     * Each row in the CSV two columns: "Typ" and "Klassenname" representing the fully qualified name.
+     * For each row, this method load the Java class specified in the"Klassenname" column.
+     * If the class is successfully loaded, its {@code Class} object is stored in the {@link #PRODUCT_TYPES} map.
+     */
+    public static void readProductTypesCSV() {
+        try (CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(FILE_NAME_PRODUCT_TYPES))) {
+            Map<String, String> line;
+            while ((line = reader.readMap()) != null) {
+                PRODUCT_TYPES.put(line.get("Typ"), (Class<? extends Product>) Class.forName(line.get("Klassenname")));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -55,7 +64,7 @@ public class CSVProductReader {
                     try {
                         Product product = productClass.getDeclaredConstructor(String.class, int.class, Instant.class)
                                 .newInstance(line.get("Bezeichnung"), Integer.parseInt(line.get("Qualitaet")), Instant.parse(line.get("Verfallsdatum")));
-                        productList.add(product);
+                        PRODUCT_LIST.add(product);
                     } catch (Exception e) {
                         System.err.println("Fehler beim Erstellen von " + productTyp + ": " + e.getMessage());
                     }
@@ -66,6 +75,6 @@ public class CSVProductReader {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return productList;
+        return PRODUCT_LIST;
     }
 }

@@ -11,10 +11,11 @@ public class Main {
     public static void main(String[] args){
 
         // Need to switch the path to your own
-        String fileNameProductData = "C:\\Users\\jonas\\IdeaProjects\\SuperDuperMarkt\\src\\main\\java\\superdupermarkt\\source\\data\\productData.csv";
+        String fileNameProductData = "src\\main\\java\\superdupermarkt\\source\\data\\ProductData.csv";
 
         Instant startTime = Instant.parse("2025-05-08T19:00:31.907111500Z");
 
+        CSVProductReader.readProductTypesCSV();
         List<Product> productList = CSVProductReader.readProductDataCSV(fileNameProductData);
         System.out.println("Startwerte des Programmes");
         System.out.println("-------------------------------------------------------");
