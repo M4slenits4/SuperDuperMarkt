@@ -1,7 +1,7 @@
 package de.superdupermarkt.worker;
 
 
-import de.superdupermarkt.source.CSVProductReader;
+import de.superdupermarkt.csv.util.CSVProductReader;
 import de.superdupermarkt.products.Product;
 
 import java.time.Duration;

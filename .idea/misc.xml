@@ -8,6 +8,9 @@
         <option value="$PROJECT_DIR$/../DataOrganizer/pom.xml" />
         <option value="$PROJECT_DIR$/../untitled/pom.xml" />
         <option value="$PROJECT_DIR$/../Products/pom.xml" />
+        <option value="$PROJECT_DIR$/../NewProduct/pom.xml" />
+        <option value="$PROJECT_DIR$/../DataOrganizerSQL/pom.xml" />
+        <option value="$PROJECT_DIR$/../DataOrganizerCSV/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

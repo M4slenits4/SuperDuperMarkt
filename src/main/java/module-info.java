@@ -1,5 +1,5 @@
 module SuperDuperMarkt {
     requires lombok;
-    requires DataOrganizer;
+    requires DataOrganizerCSV;
     requires Products;
 }
